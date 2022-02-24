@@ -34,6 +34,12 @@ jobs:
     steps:
       - checkout
       - run: echo "A more familiar hi"
+      - run: yum search tar
+      - run: yum install tar -y
+      - run: yum update tar
+      - run: yum search gzip
+      - run: yum install gzip -y
+      - run: yum update gzip
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
           at: my_workspace
