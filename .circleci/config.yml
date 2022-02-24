@@ -36,6 +36,7 @@ jobs:
       - run:
           name:  Installing Dependencies
           command: *Install_Deps
+
       - run:
           name: AWS CMD Check Stuff
           command:  | 
@@ -44,7 +45,7 @@ jobs:
             aws configure set aws_secret_access_key $SECRET_ACCESS_KEY
             aws configure set region $AWS_DEFAULT_REGION
             aws s3 ls
-            
+
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
           at: my_workspace
@@ -57,7 +58,7 @@ jobs:
             else
               echo "Nope!"; exit 1
             fi
-     
+
 workflows:
   version: 2
   one_and_two:
