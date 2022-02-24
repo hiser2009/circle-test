@@ -36,7 +36,9 @@ jobs:
     steps:
       - checkout
       - run: echo "A more familiar hi"
-      - run: *Install_Deps
+      - run:
+          name:  Installing Dependencies
+          command: *Install_Deps
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
           at: my_workspace
