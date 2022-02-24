@@ -8,19 +8,22 @@ jobs:
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
-    command: |
-
       - run: echo "A first hello"
       - run: mkdir -p my_workspace
-      - run: echo "Trying out workspaces" > my_workspace/echo-output     
-      - run: yum search tar && yum search tar && yum search tar && yum install tar -y && yum update tar && yum search gzip && yum install gzip -y && yum update gzip
+      - run: echo "Trying out workspaces" > my_workspace/echo-output
+      - run: yum search tar
+      - run: yum install tar -y
+      - run: yum update tar
+      - run: yum search gzip
+      - run: yum install gzip -y
+      - run: yum update gzip
       - persist_to_workspace:
           # Must be an absolute path, or relative path from working_directory
           root: my_workspace
           # Must be relative path from root
           paths:
             - echo-output
-    
+      
       
   two:
     docker:
