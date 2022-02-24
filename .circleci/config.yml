@@ -30,15 +30,22 @@ jobs:
   two:
     docker:
       - image: amazon/aws-cli:latest
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
       - run: echo "A more familiar hi"
       - run:
           name:  Installing Dependencies
           command: *Install_Deps
+
+      - run:
+          name: AWS CMD Check Stuff
+          command:  | 
+            echo "Lets list the S3 Buckets"
+            aws configure set aws_access_key_id $ACCESS_KEY_ID
+            aws configure set aws_secret_access_key $SECRET_ACCESS_KEY
+            aws configure set region $AWS_DEFAULT_REGION
+            aws s3 ls
+
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
           at: my_workspace
@@ -51,12 +58,7 @@ jobs:
             else
               echo "Nope!"; exit 1
             fi
-      # - run: |
-      #     if [[ $(cat my_workspace/echo-output) == "Trying out workspaces" ]]; then
-      #       echo "It worked!";
-      #     else
-      #       echo "Nope!"; exit 1
-      #     fi
+
 workflows:
   version: 2
   one_and_two:
