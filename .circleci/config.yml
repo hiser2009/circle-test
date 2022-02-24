@@ -14,6 +14,9 @@ jobs:
       - run: yum search tar
       - run: yum install tar -y
       - run: yum update tar
+      - run: yum search gzip
+      - run: yum install gzip -y
+      - run: yum update gzip
       - persist_to_workspace:
           # Must be an absolute path, or relative path from working_directory
           root: my_workspace
