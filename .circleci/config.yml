@@ -2,7 +2,7 @@ version: 2
 jobs:
   one:
     docker:
-      - image: cimg/ruby:3.0.2
+      - image: amazon/aws-cli:latest
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
@@ -19,7 +19,7 @@ jobs:
             - echo-output
   two:
     docker:
-      - image: cimg/ruby:3.0.2
+      - image: amazon/aws-cli:latest
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
