@@ -7,7 +7,7 @@ jobs:
       - image: amazon/aws-cli:latest
         # auth:
         #   username: mydockerhub-user
-        #   password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+        #   password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference vvv
     steps:
       - checkout
       - run: echo "A first hello"
