@@ -20,8 +20,8 @@ jobs:
       - run:
           name:  Installing Dependencies
           command: &Install_Deps | 
-              apt get update -y
-              apt install aws-cli
+              sudo apt-get update -y
+              sudo apt-get install awscli
       - persist_to_workspace:
           # Must be an absolute path, or relative path from working_directory
           root: my_workspace
