@@ -14,11 +14,15 @@ jobs:
       - run: echo "Running SNYK Scan"
       - snyk/scan:
           docker-image-name: cimg/ruby:2.6.8
-          fail-on-issues:
+          fail-on-issues: true
           severity-threshold:
-            default: medium
+            default: high
             enum:
+              - low
               - medium
+              - high
+              - critical
+            type: enum
       - run: echo "A first hello"
       - run: mkdir -p my_workspace
       - run: echo "Trying out workspaces" > my_workspace/echo-output
