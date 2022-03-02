@@ -70,4 +70,6 @@ workflows:
       - two:
           requires:
             - one
-      - snyk/scan-iac
+      - snyk/scan-iac:
+          requires:
+            - two
