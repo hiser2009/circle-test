@@ -4,27 +4,24 @@ orbs:
 jobs:
   one:
     docker:
-      - image: amazon/aws-cli:latest
+      # - image: amazon/aws-cli:latest cimg/ruby:2.6.8
+      - image: cimg/ruby:2.6.8
         # auth:
         #   username: mydockerhub-user
         #   password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
       - run: echo "Running SNYK Scan"
-      - snyk/scan:
-          docker-image-name: amazon/aws-cli:latest
+      # - snyk/scan:
+      #     docker-image-name: amazon/aws-cli:latest
       - run: echo "A first hello"
       - run: mkdir -p my_workspace
       - run: echo "Trying out workspaces" > my_workspace/echo-output
       - run:
           name:  Installing Dependencies
           command: &Install_Deps | 
-              yum search tar
-              yum install tar -y
-              yum update tar
-              yum search gzip
-              yum install gzip -y
-              yum update gzip
+              apt get update -y
+              apt install aws-cli
       - persist_to_workspace:
           # Must be an absolute path, or relative path from working_directory
           root: my_workspace
@@ -34,7 +31,8 @@ jobs:
       
   two:
     docker:
-      - image: amazon/aws-cli:latest
+      # - image: amazon/aws-cli:latest
+      - image: cimg/ruby:2.6.8
     steps:
       - checkout
       - run: echo "A more familiar hi"
