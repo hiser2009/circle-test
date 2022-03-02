@@ -12,7 +12,8 @@ jobs:
     steps:
       - checkout
       - run: echo "Running SNYK Scan"
-      - snyk/scan
+      - snyk/scan:
+          docker-image-name: cimg/ruby:2.6.8
       - run: echo "A first hello"
       - run: mkdir -p my_workspace
       - run: echo "Trying out workspaces" > my_workspace/echo-output
