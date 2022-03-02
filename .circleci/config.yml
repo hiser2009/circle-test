@@ -13,7 +13,7 @@ jobs:
       - checkout
       - run: echo "Running SNYK Scan"
       - snyk/scan:
-          docker-image-name: cimg/ruby:2.6.8 --severity-threshold=medium     || true
+          docker-image-name: cimg/ruby:2.6.8 --severity-threshold=high     || true
           fail-on-issues: false
           # severity-threshold:
           #   default: high
