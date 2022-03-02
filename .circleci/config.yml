@@ -6,7 +6,7 @@ jobs:
     docker:
       # - image: amazon/aws-cli:latest cimg/ruby:2.6.8
       # - image: cimg/ruby:2.6.8
-      - image: cimg/ruby:latest
+      - image: cimg/ruby:3.1.1
         # auth:
         #   username: mydockerhub-user
         #   password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
@@ -14,7 +14,7 @@ jobs:
       - checkout
       - run: echo "Running SNYK Scan"
       - snyk/scan:
-          docker-image-name: cimg/ruby:2.6.8 --severity-threshold=high     || true
+          docker-image-name: cimg/ruby:3.1.1 --severity-threshold=high     || true
           fail-on-issues: true
       - run: echo "A first hello"
       - run: mkdir -p my_workspace
@@ -35,7 +35,7 @@ jobs:
     docker:
       # - image: amazon/aws-cli:latest
       # - image: cimg/ruby:2.6.8
-      - image: cimg/ruby:latest
+      - image: cimg/ruby:3.1.1
     steps:
       - checkout
       - run: echo "A more familiar hi"
