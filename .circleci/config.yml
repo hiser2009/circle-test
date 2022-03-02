@@ -1,4 +1,6 @@
 version: 2.1
+orbs: 
+  snyk: snyk/snyk@1.1.2
 jobs:
   one:
     docker:
@@ -8,6 +10,8 @@ jobs:
         #   password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
+      - run: echo "Running SNYK Scan"
+      - snyk/scan:
       - run: echo "A first hello"
       - run: mkdir -p my_workspace
       - run: echo "Trying out workspaces" > my_workspace/echo-output
