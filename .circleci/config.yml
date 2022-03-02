@@ -12,9 +12,7 @@ jobs:
         #   password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
-      - run:
-          name: SNYK Scanning in Progress
-          command: snyk/scan
+      - run: echo "Running SNYK Scan"
       - snyk/scan:
           docker-image-name: cimg/ruby:3.1.1 #--severity-threshold=high     || true
           fail-on-issues: true
