@@ -11,7 +11,7 @@ jobs:
     steps:
       - checkout
       - run: echo "Running SNYK Scan"
-      - scan:
+      - snyk/scan
       - run: echo "A first hello"
       - run: mkdir -p my_workspace
       - run: echo "Trying out workspaces" > my_workspace/echo-output
