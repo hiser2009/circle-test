@@ -1,6 +1,7 @@
 version: 2.1
 orbs: 
   snyk: snyk/snyk@1.1.2
+  aws-ecr: circleci/aws-ecr@7.3.0
 jobs:
   one:
     docker:
@@ -73,3 +74,14 @@ workflows:
       - two:
           requires:
             - one
+      - aws-ecr/build-and-push-image:
+          requires:
+            - two
+          account-url: AWS_ECR_ACCOUNT_URL
+          aws-access-key-id: ACCESS_KEY_ID
+          aws-secret-access-key: SECRET_ACCESS_KEY
+          create-repo: true
+          region: AWS_DEFAULT_REGION
+          repo: circle-test
+          skip-when-tags-exist: false
+          tag: 'latest,myECRRepoTag'
