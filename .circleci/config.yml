@@ -3,21 +3,25 @@ jobs:
   build:
     working_directory: /app
     docker:
-      - image: docker:git
+      - image: amazon/aws-cli:latest
     steps:
       - checkout
       - setup_remote_docker
       - run:
           name: Install dependencies
           command: |
-            apk get update 
-            apk add --no-cache 
-            apk add --no-cache curl
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            ./aws/install 
-            echo $(which aws)
-            echo $(aws --v)
+            yum search tar
+            yum install tar -y
+            yum update tar
+            yum search gzip
+            yum install gzip -y
+            yum update gzip
+            yum install git
+            yum search docker
+            yum install docker
+            wget https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) 
+            mv docker-compose-$(uname -s)-$(uname -m) /usr/local/bin/docker-compose
+            chmod -v +x /usr/local/bin/docker-compose
       - restore_cache:
           keys:
             - v1-{{ .Branch }}
