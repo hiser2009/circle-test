@@ -64,6 +64,8 @@ jobs:
       - deploy:
           name: Push application Docker image
           command: |
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
             if [ "${CIRCLE_BRANCH}" == "build_docker_feat" ]; then
               login="$(aws ecr get-login)"
               ${login}
