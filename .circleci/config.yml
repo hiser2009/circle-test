@@ -19,9 +19,6 @@ jobs:
             yum install git
             yum search docker
             yum install docker
-            wget https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) 
-            mv docker-compose-$(uname -s)-$(uname -m) /usr/local/bin/docker-compose
-            chmod -v +x /usr/local/bin/docker-compose
       - restore_cache:
           keys:
             - v1-{{ .Branch }}
