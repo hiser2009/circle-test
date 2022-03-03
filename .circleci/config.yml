@@ -20,10 +20,10 @@ jobs:
             - v1-{{ .Branch }}
           paths:
             - /caches/app.tar
-      - run:
-          name: Make Dummy Docker Compse File
-          command: |
-            touch ././docker-compose.yml
+      # - run:
+      #     name: Make Dummy Docker Compse File
+      #     command: |
+      #       touch ././docker-compose.yml
       - run:
           name: Load Docker image layer cache
           command: |
@@ -45,6 +45,7 @@ jobs:
       - run:
           name: Run tests
           command: |
+            touch ././docker-compose.yml
             docker-compose -f ./docker-compose.test.yml up
       - deploy:
           name: Push application Docker image
