@@ -17,7 +17,6 @@ jobs:
             yum install gzip -y
             yum update gzip
             yum install git -y
-            yum search docker
             yum install docker -y
       - restore_cache:
           keys:
