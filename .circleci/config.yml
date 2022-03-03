@@ -15,6 +15,7 @@ jobs:
             sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
             cd -
             yum update -y
+            yum install unzip
             yum search tar
             yum install tar -y
             yum update tar
