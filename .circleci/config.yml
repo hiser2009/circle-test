@@ -17,7 +17,7 @@ jobs:
             yum install gzip -y
             yum update gzip
             yum install git -y
-            yum install docker -y
+            yum install -y yum-utils
       - restore_cache:
           keys:
             - v1-{{ .Branch }}
