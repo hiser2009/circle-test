@@ -52,6 +52,7 @@ jobs:
           command: |
             apk add py3-pip
             pip3 install awscliv2 
+            echo $(which aws)
             echo $(aws --v)
       - deploy:
           name: Push application Docker image
