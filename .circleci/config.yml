@@ -50,7 +50,7 @@ jobs:
       - run:
           name: Check AWS Version
           command: |
-            echo aws--v
+            echo $(aws --v)
       - deploy:
           name: Push application Docker image
           command: |
