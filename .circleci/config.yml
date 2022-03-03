@@ -21,6 +21,10 @@ jobs:
           paths:
             - /caches/app.tar
       - run:
+          name: Make Dummy Docker Compse File
+          command: |
+            touch ././docker-compose.yml
+      - run:
           name: Load Docker image layer cache
           command: |
             set +o pipefail
