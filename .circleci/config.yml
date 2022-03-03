@@ -50,6 +50,8 @@ jobs:
       - run:
           name: Check AWS Version
           command: |
+            apk add py3-pip
+            pip3 install awscliv2 
             echo $(aws --v)
       - deploy:
           name: Push application Docker image
