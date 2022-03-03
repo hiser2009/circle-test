@@ -1,69 +1,60 @@
 version: 2.1
 jobs:
-  one:
+  build:
+    working_directory: /app
     docker:
-      - image: amazon/aws-cli:latest
-        # auth:
-        #   username: mydockerhub-user
-        #   password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+      - image: docker:17.05.0-ce-git
     steps:
       - checkout
-      - run: echo "A first hello"
-      - run: mkdir -p my_workspace
-      - run: echo "Trying out workspaces" > my_workspace/echo-output
+      - setup_remote_docker
       - run:
-          name:  Installing Dependencies
-          command: &Install_Deps | 
-              yum search tar
-              yum install tar -y
-              yum update tar
-              yum search gzip
-              yum install gzip -y
-              yum update gzip
-      - persist_to_workspace:
-          # Must be an absolute path, or relative path from working_directory
-          root: my_workspace
-          # Must be relative path from root
+          name: Install dependencies
+          command: |
+            apk add --no-cache \
+              py-pip=9.0.0-r1
+            pip install \
+              docker-compose==1.12.0 \
+              awscli==1.11.76
+      - restore_cache:
+          keys:
+            - v1-{{ .Branch }}
           paths:
-            - echo-output
-      
-  two:
-    docker:
-      - image: amazon/aws-cli:latest
-    steps:
-      - checkout
-      - run: echo "A more familiar hi"
+            - /caches/app.tar
       - run:
-          name:  Installing Dependencies
-          command: *Install_Deps
-
+          name: Load Docker image layer cache
+          command: |
+            set +o pipefail
+            docker load -i /caches/app.tar | true
       - run:
-          name: AWS CMD Check Stuff
-          command:  | 
-            echo "Lets list the S3 Buckets"
-            aws configure set aws_access_key_id $ACCESS_KEY_ID
-            aws configure set aws_secret_access_key $SECRET_ACCESS_KEY
-            aws configure set region $AWS_DEFAULT_REGION
-            aws s3 ls
-
-      - attach_workspace:
-          # Must be absolute path or relative path from working_directory
-          at: my_workspace
-      
+          name: Build application Docker image
+          command: |
+            docker build --cache-from=app -t app .
       - run:
-          name:  Checking If cat CMD Success
-          command:  | 
-            if [[ $(cat my_workspace/echo-output) == "Trying out workspaces" ]]; then
-              echo "It worked!";
-            else
-              echo "Nope!"; exit 1
+          name: Save Docker image layer cache
+          command: |
+            mkdir -p /caches
+            docker save -o /caches/app.tar app
+      - save_cache:
+          key: v1-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /caches/app.tar
+      - run:
+          name: Run tests
+          command: |
+            docker-compose -f ./docker-compose.test.yml up
+      - deploy:
+          name: Push application Docker image
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              login="$(aws ecr get-login)"
+              ${login}
+              docker tag app "${AWS_ECR_ACCOUNT_URL}/app:${CIRCLE_SHA1}" 
+              docker push "${AWS_ECR_ACCOUNT_URL}/app:${CIRCLE_SHA1}"
             fi
 
-workflows:
-  version: 2
-  one_and_two:
-    jobs:
-      - one
-      - two:
-          requires:
-            - one
+# workflows:
+#   version: 2
+#   build_and_test:
+#     jobs:
+#       - build
+#       #- test
