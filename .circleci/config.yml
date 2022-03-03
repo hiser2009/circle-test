@@ -26,6 +26,9 @@ jobs:
             yum install -y yum-utils
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
+            dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+            dnf repolist -v
+            dnf install docker-ce --nobest -y            
       - restore_cache:
           keys:
             - v1-{{ .Branch }}
