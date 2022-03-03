@@ -47,6 +47,10 @@ jobs:
       #     command: |
       #       echo docker-compose -f ./docker-compose.test.yml >> ./docker-compose.test.yml
       #       docker-compose -f ./docker-compose.test.yml up
+      - run:
+          name: Check AWS Version
+          command: |
+            echo aws--v
       - deploy:
           name: Push application Docker image
           command: |
