@@ -1,6 +1,7 @@
 version: 2.1
 orbs: 
   snyk: snyk/snyk@1.1.2
+  slack: circleci/slack@4.8.3
 jobs:
   build:
     working_directory: /app
@@ -82,6 +83,13 @@ jobs:
               docker tag app "${AWS_ECR_ACCOUNT_URL}/app:${CIRCLE_SHA1}" 
               docker push "${AWS_ECR_ACCOUNT_URL}/app:${CIRCLE_SHA1}"
             fi
+      - slack/notify:
+          branch_pattern:
+            default: .+
+          channel:
+            default: $SLACK_DEFAULT_CHANNEL
+          custom:
+            default: 'This is a test I have no idea how its going to look.'
 
 workflows:
   version: 2
