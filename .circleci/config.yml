@@ -66,7 +66,7 @@ jobs:
       #       docker-compose -f ./docker-compose.test.yml up
       - run: echo "Running SNYK Scan"
       - snyk/scan:
-          docker-image-name: cimg/ruby:3.1.1 --severity-threshold=high     || true
+          docker-image-name: centos:latest --severity-threshold=high     || true
           fail-on-issues: true
           install-alpine-dependencies: true
       - deploy:
