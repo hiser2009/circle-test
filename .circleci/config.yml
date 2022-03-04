@@ -86,10 +86,8 @@ jobs:
       - slack/notify:
           branch_pattern:
             default: .+
-          channel:
-            default: circle-test-ecr-app
-          custom:
-            default: 'This is a test I have no idea how its going to look.'
+          channel: "{:default $SLACK_DEFAULT_CHANNEL}"
+          custom: "{:default This is a test I have no idea how its going to look.}"
 
 workflows:
   version: 2
