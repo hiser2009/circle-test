@@ -87,7 +87,7 @@ jobs:
           branch_pattern:
             default: .+
           channel:
-            default: $SLACK_DEFAULT_CHANNEL
+            default: 'circle-test-ecr-app'
           custom:
             default: 'This is a test I have no idea how its going to look.'
 
