@@ -67,7 +67,7 @@ jobs:
       #       docker-compose -f ./docker-compose.test.yml up
       - run: echo "Running SNYK Scan"
       - snyk/scan:
-          docker-image-name: centos:latest --severity-threshold=high     || true
+          docker-image-name: ${AWS_ECR_ACCOUNT_URL}/app:${CIRCLE_SHA1} --severity-threshold=high     || true
           fail-on-issues: true
           install-alpine-dependencies: true
       - deploy:
