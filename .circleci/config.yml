@@ -87,7 +87,7 @@ jobs:
           branch_pattern:
             default: .+
           channel:
-            default: 'circle-test-ecr-app'
+            default: circle-test-ecr-app
           custom:
             default: 'This is a test I have no idea how its going to look.'
 
