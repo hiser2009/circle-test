@@ -68,7 +68,7 @@ jobs:
       - snyk/scan:
           docker-image-name: cimg/base:2022.03 --severity-threshold=high     || true
           fail-on-issues: true
-          install-alpine-dependencies: apk add sudo
+          install-alpine-dependencies: "apk add sudo"
       - deploy:
           name: Push application Docker image
           command: |
