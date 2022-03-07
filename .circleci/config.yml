@@ -88,6 +88,8 @@ jobs:
           channel: circle-test-ecr-app 
           template: basic_success_1 
           event: always
+          custom: { 	"blocks": [ 		{ 			"type": "section", 			"text": { 				"type": "mrkdwn", 				"text": "This is a section block with an accessory image." 			}, 			"accessory": { 				"type": "image", 				"image_url": "https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg", 				"alt_text": "cute cat" 			} 		} 	] } 
+
       # - slack/notify:
       #     channel: circle-test-ecr-app
       #     event: pass
