@@ -88,7 +88,7 @@ jobs:
           channel: 'circle-test-ecr-app' 
           template: basic_success_1 
           event: pass
-          custom:  "This is a test"
+          custom:  'This is a test'
       - slack/notify:
           branch_pattern: build_docker_feat 
           channel: 'circle-test-ecr-app' 
