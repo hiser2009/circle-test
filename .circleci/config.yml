@@ -91,7 +91,7 @@ jobs:
       #     custom: "{:default This is a test I have no idea how its going to look.}"
       #     # custom: "This is a test I have no idea how its going to look."
       - slack/notify:
-          channel: $SLACK_DEFAULT_CHANNEL
+          channel: circle-test-ecr-app
           event: pass
           template: success_tagged_deploy_1
 workflows:
