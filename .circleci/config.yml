@@ -83,14 +83,17 @@ jobs:
               docker tag app "${AWS_ECR_ACCOUNT_URL}/app:${CIRCLE_SHA1}" 
               docker push "${AWS_ECR_ACCOUNT_URL}/app:${CIRCLE_SHA1}"
             fi
+      # - slack/notify:
+      #     branch_pattern: "{:default .+}"
+      #     #branch_pattern: ".+"
+      #     #channel: "{:default $SLACK_DEFAULT_CHANNEL}"
+      #     channel: $SLACK_DEFAULT_CHANNEL"
+      #     custom: "{:default This is a test I have no idea how its going to look.}"
+      #     # custom: "This is a test I have no idea how its going to look."
       - slack/notify:
-          branch_pattern: "{:default .+}"
-          #branch_pattern: ".+"
-          channel: "{:default $SLACK_DEFAULT_CHANNEL}"
-          #channel: "$SLACK_DEFAULT_CHANNEL"
-          custom: "{:default This is a test I have no idea how its going to look.}"
-          # custom: "This is a test I have no idea how its going to look."
-
+          channel: $SLACK_DEFAULT_CHANNEL
+          event: pass
+          template: success_tagged_deploy_1
 workflows:
   version: 2
   build_and_test:
