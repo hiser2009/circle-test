@@ -89,7 +89,7 @@ jobs:
           template: basic_success_1 
           event: always
           debug: true
-          custom:  $SLACK_BUILD_MSG
+          custom:  "This is a test"
           
 workflows:
   version: 2
