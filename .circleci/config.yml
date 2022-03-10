@@ -88,6 +88,17 @@ jobs:
       - image: AWS_ECR_ACCOUNT_URL/app:$CIRCLE_SHA1
 
     steps:
+      - run:
+          name: Install dependencies
+          command: |
+            yum update -y
+            yum install unzip -y
+            yum search tar
+            yum install tar -y
+            yum update tar
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            ./aws/install
       - slack/notify:
           branch_pattern: master 
           channel: 'circle-test-ecr-app' 
@@ -105,6 +116,17 @@ jobs:
       - image: $AWS_ECR_ACCOUNT_URL/app:$CIRCLE_SHA1
       
     steps:
+      - run:
+          name: Install dependencies
+          command: |
+            yum update -y
+            yum install unzip -y
+            yum search tar
+            yum install tar -y
+            yum update tar
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            ./aws/install
       - slack/notify:
           channel: 'circle-test-ecr-app' 
           template: basic_success_1 
