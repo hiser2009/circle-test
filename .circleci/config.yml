@@ -99,6 +99,9 @@ jobs:
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             ./aws/install
+            aws configure set AWS_ACCESS_KEY_ID ${ACCESS_KEY_ID}
+            aws configure set AWS_SECRET_ACCESS_KEY ${SECRET_ACCESS_KEY}
+            aws configure set AWS_DEFAULT_REGION ${AWS_DEFAULT_REGION}
       - slack/notify:
           branch_pattern: master 
           channel: 'circle-test-ecr-app' 
@@ -127,6 +130,9 @@ jobs:
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             ./aws/install
+            aws configure set AWS_ACCESS_KEY_ID ${ACCESS_KEY_ID}
+            aws configure set AWS_SECRET_ACCESS_KEY ${SECRET_ACCESS_KEY}
+            aws configure set AWS_DEFAULT_REGION ${AWS_DEFAULT_REGION}
       - slack/notify:
           channel: 'circle-test-ecr-app' 
           template: basic_success_1 
