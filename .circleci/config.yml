@@ -102,7 +102,7 @@ jobs:
 
   non_prod_release_notifications:
     docker:
-      - image: AWS_ECR_ACCOUNT_URL/app:$CIRCLE_SHA1
+      - image: $AWS_ECR_ACCOUNT_URL/app:$CIRCLE_SHA1
       
     steps:
       - slack/notify:
