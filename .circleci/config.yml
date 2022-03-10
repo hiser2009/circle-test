@@ -85,7 +85,7 @@ jobs:
             fi
   prod_release_notifications:
     docker:
-      - image: AWS_ECR_ACCOUNT_URL/app:$CIRCLE_SHA1
+      - image: $AWS_ECR_ACCOUNT_URL/app:$CIRCLE_SHA1
         command: |
           aws configure set AWS_ACCESS_KEY_ID ${ACCESS_KEY_ID}
           aws configure set AWS_SECRET_ACCESS_KEY ${SECRET_ACCESS_KEY}
@@ -95,17 +95,17 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            yum update -y
-            yum install unzip -y
-            yum search tar
-            yum install tar -y
-            yum update tar
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            ./aws/install
-            aws configure set AWS_ACCESS_KEY_ID ${ACCESS_KEY_ID}
-            aws configure set AWS_SECRET_ACCESS_KEY ${SECRET_ACCESS_KEY}
-            aws configure set AWS_DEFAULT_REGION ${AWS_DEFAULT_REGION}
+            # yum update -y
+            # yum install unzip -y
+            # yum search tar
+            # yum install tar -y
+            # yum update tar
+            # curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            # unzip awscliv2.zip
+            # ./aws/install
+            # aws configure set AWS_ACCESS_KEY_ID ${ACCESS_KEY_ID}
+            # aws configure set AWS_SECRET_ACCESS_KEY ${SECRET_ACCESS_KEY}
+            # aws configure set AWS_DEFAULT_REGION ${AWS_DEFAULT_REGION}
       - slack/notify:
           branch_pattern: master 
           channel: 'circle-test-ecr-app' 
