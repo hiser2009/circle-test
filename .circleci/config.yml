@@ -121,5 +121,9 @@ workflows:
     jobs:
       - build
       #- test
-      - prod_release_notifications
-      - non_prod_release_notifications
+      - prod_release_notifications:
+          requires:
+            - build
+      - non_prod_release_notifications:
+          requires:
+            - build
