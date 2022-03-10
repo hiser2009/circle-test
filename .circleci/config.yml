@@ -83,14 +83,34 @@ jobs:
               docker tag app "${AWS_ECR_ACCOUNT_URL}/app:${CIRCLE_SHA1}" 
               docker push "${AWS_ECR_ACCOUNT_URL}/app:${CIRCLE_SHA1}"
             fi
+  prod_release_notifications:
+    docker:
+      - image: AWS_ECR_ACCOUNT_URL/app:$CIRCLE_SHA1
+
+    steps:
       - slack/notify:
-          branch_pattern: build_docker_feat 
+          branch_pattern: master 
           channel: 'circle-test-ecr-app' 
           template: basic_success_1 
           event: pass
           custom:  'This is a test'
       - slack/notify:
           branch_pattern: build_docker_feat 
+          channel: 'circle-test-ecr-app' 
+          template: basic_fail_1 
+          event: fail
+
+  non_prod_release_notifications:
+    docker:
+      - image: AWS_ECR_ACCOUNT_URL/app:$CIRCLE_SHA1
+      
+    steps:
+      - slack/notify:
+          channel: 'circle-test-ecr-app' 
+          template: basic_success_1 
+          event: pass
+          custom:  'This is a test'
+      - slack/notify:
           channel: 'circle-test-ecr-app' 
           template: basic_fail_1 
           event: fail
@@ -101,3 +121,5 @@ workflows:
     jobs:
       - build
       #- test
+      - prod_release_notifications
+      - non_prod_release_notifications
