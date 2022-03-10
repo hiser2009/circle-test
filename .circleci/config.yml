@@ -86,6 +86,10 @@ jobs:
   prod_release_notifications:
     docker:
       - image: AWS_ECR_ACCOUNT_URL/app:$CIRCLE_SHA1
+        command: |
+          aws configure set AWS_ACCESS_KEY_ID ${ACCESS_KEY_ID}
+          aws configure set AWS_SECRET_ACCESS_KEY ${SECRET_ACCESS_KEY}
+          aws configure set AWS_DEFAULT_REGION ${AWS_DEFAULT_REGION}
 
     steps:
       - run:
@@ -117,6 +121,10 @@ jobs:
   non_prod_release_notifications:
     docker:
       - image: $AWS_ECR_ACCOUNT_URL/app:$CIRCLE_SHA1
+        command: |
+          aws configure set AWS_ACCESS_KEY_ID ${ACCESS_KEY_ID}
+          aws configure set AWS_SECRET_ACCESS_KEY ${SECRET_ACCESS_KEY}
+          aws configure set AWS_DEFAULT_REGION ${AWS_DEFAULT_REGION}
       
     steps:
       - run:
