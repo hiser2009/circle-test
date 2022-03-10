@@ -85,7 +85,7 @@ jobs:
             fi
   prod_release_notifications:
     docker:
-      - image: cimg/base
+      - image: centos:latest
         command: |
           aws configure set AWS_ACCESS_KEY_ID ${ACCESS_KEY_ID}
           aws configure set AWS_SECRET_ACCESS_KEY ${SECRET_ACCESS_KEY}
@@ -120,7 +120,7 @@ jobs:
 
   non_prod_release_notifications:
     docker:
-      - image: cimg/base
+      - image: centos:latest
         command: |
           aws configure set AWS_ACCESS_KEY_ID ${ACCESS_KEY_ID}
           aws configure set AWS_SECRET_ACCESS_KEY ${SECRET_ACCESS_KEY}
