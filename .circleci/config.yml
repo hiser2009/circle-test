@@ -2,7 +2,6 @@ version: 2.1
 orbs: 
   snyk: snyk/snyk@1.1.2
   slack: circleci/slack@4.8.3
-  node: circleci/node@5.0.0
 jobs:
   build:
     working_directory: /app
@@ -84,18 +83,10 @@ jobs:
               docker tag app "${AWS_ECR_ACCOUNT_URL}/app:${CIRCLE_SHA1}" 
               docker push "${AWS_ECR_ACCOUNT_URL}/app:${CIRCLE_SHA1}"
             fi
-  deploy:
-    executor:
-      name: node/default
-    steps:
-      - checkout
-      - node/install-packages
-      - run:
-          command: npm run deploy
       - slack/notify:
-          channel: circle-test-ecr-app
-          event: pass
-          template: success_tagged_deploy_1
+          channel: $SLACK_DEFAULT_CHANNEL
+          event: always
+          #template: success_tagged_deploy_1
           
 workflows:
   version: 2
@@ -103,6 +94,3 @@ workflows:
     jobs:
       - build
       #- test
-      - deploy:
-          requires:
-            - build
