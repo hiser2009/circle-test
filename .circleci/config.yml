@@ -85,8 +85,9 @@ jobs:
             fi
       - slack/notify:
           channel: 'circle-test-ecr-app'
-          event: always
-          #template: success_tagged_deploy_1
+          event: pass
+          template: success_tagged_deploy_1
+          branch_pattern: build_docker_feat
           
 workflows:
   version: 2
