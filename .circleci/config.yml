@@ -84,7 +84,7 @@ jobs:
               docker push "${AWS_ECR_ACCOUNT_URL}/app:${CIRCLE_SHA1}"
             fi
       - slack/notify:
-          channel: $SLACK_DEFAULT_CHANNEL
+          channel: 'circle-test-ecr-app'
           event: always
           #template: success_tagged_deploy_1
           
