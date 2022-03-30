@@ -101,7 +101,7 @@ jobs:
                   "fields": [
                     {
                       "type": "plain_text",
-                      "text": "Circle Build URL: <${CIRCLE_BUILD_URL}|Circle Build>",
+                      "text": "New Paid Time Off request from <example.com|Fred Enriquez>\n\n<https://example.com|View request>",
                       "emoji": true
                     }
                   ]
