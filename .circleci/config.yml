@@ -98,13 +98,11 @@ jobs:
               "blocks": [
                 {
                   "type": "section",
-                  "text": [
-                    {
+                  "text": {
                       "type": "mrkdwn",
                       "text": "New Paid Time Off request from <example.com|Fred Enriquez>\n\n<https://example.com|View request>",
                       "emoji": true
-                    }
-                  ]
+                  }
                 }
               ]
             }
