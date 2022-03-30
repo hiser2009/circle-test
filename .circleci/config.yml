@@ -101,7 +101,7 @@ jobs:
                   "fields": [
                     {
                       "type": "plain_text",
-                      "text": "Circle Build URL: <${CIRCLE_BUILD_URL}>",
+                      "text": "Circle Build URL: <${CIRCLE_BUILD_URL}|Circle Build>",
                       "emoji": true
                     }
                   ]
