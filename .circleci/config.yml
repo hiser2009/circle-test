@@ -102,10 +102,20 @@ jobs:
                       "type": "mrkdwn",
                       "text": "Circle Build URL here <${CIRCLE_BUILD_URL}|Circle Build>\n\n<https://itshaveaniceday.com/|Have a wonderful day!>"
                   }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                      "type": "mrkdwn",
+                      "text": "This is a section block with an accessory image."    
+                  },
+                  "accessory": {
+                       "type": "image",
+                       "image_url": "https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg","alt_text": "cute cat"
+                  }
                 }
               ]
             }
-          
 workflows:
   version: 2
   build_and_deploy:
