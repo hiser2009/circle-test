@@ -87,12 +87,10 @@ jobs:
           channel: 'circle-test-ecr-app'
           event: pass
           template: basic_success_1
-          branch_pattern: build_docker_feat
       - slack/notify:
           channel: 'circle-test-ecr-app'
           event: fail
           template: basic_fail_1
-          branch_pattern: build_docker_feat
           
 workflows:
   version: 2
