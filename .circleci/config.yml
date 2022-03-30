@@ -100,7 +100,7 @@ jobs:
                   "type": "section",
                   "text": {
                       "type": "mrkdwn",
-                      "text": "New Paid Time Off request from <example.com|Fred Enriquez>\n\n<https://example.com|View request>"
+                      "text": "Circle Build URL here <${CIRCLE_BUILD_URL}|Circle Build>\n\n<https://itshaveaniceday.com/|Have a wonderful day!>"
                   }
                 }
               ]
