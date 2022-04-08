@@ -96,8 +96,8 @@ jobs:
           command: |
             cd ..
             cd app/
-            curl -F file=@index.html -F "initial_comment=Hello, Devops" -F channels=C03573PN1SB -H "Authorization: Bearer xoxb-552122382609-1880100555025-aNiDGXojpup3DgjNw4Gh1jjH" https://slack.com/api/files.upload
- 
+            pwd
+            ls -ltr
       - slack/notify:
           event: always
           custom: |
