@@ -91,6 +91,13 @@ jobs:
       #     channel: 'circle-test-ecr-app'
       #     event: fail
       #     template: basic_fail_1
+      - run:
+          name: Copy files to Slack
+          command: |
+            cd ..
+            cd app/
+            curl -F file=@index.html -F "initial_comment=Hello, Devops" -F channels=C03573PN1SB -H "Authorization: Bearer xoxb-552122382609-1880100555025-VsW7SdNRT2xQ2cDv0MiQqtR6" https://slack.com/api/files.upload
+
       - slack/notify:
           event: always
           custom: |
