@@ -66,7 +66,6 @@ jobs:
       #     command: |
       #       echo docker-compose -f ./docker-compose.test.yml >> ./docker-compose.test.yml
       #       docker-compose -f ./docker-compose.test.yml up
-      - run: echo Running SNYK Scan
       - snyk/scan:
           docker-image-name: app --severity-threshold=high     || true
           fail-on-issues: true
@@ -91,6 +90,17 @@ jobs:
       #     channel: 'circle-test-ecr-app'
       #     event: fail
       #     template: basic_fail_1
+      - run:
+          name: Save Artifact to S3
+          command: |
+            cd .. && cd /app
+            for FILE in *.html
+            do
+                aws s3 cp "$FILE"  s3://str8dert/$CIRCLE_PROJECT_REPONAME/$FILE
+                echo "export FILE=${FILE}" >> $BASH_ENV
+                echo "export OBJ_URL=$(aws s3 presign s3://str8dert/${CIRCLE_PROJECT_REPONAME}/${FILE})" >> $BASH_ENV
+                echo $OBJ_URL
+            done
       - slack/notify:
           event: always
           custom: |
@@ -100,7 +110,7 @@ jobs:
                   "type": "section",
                   "text": {
                       "type": "mrkdwn",
-                      "text": "Circle Build URL here <${CIRCLE_BUILD_URL}|Circle Build>"
+                      "text": "Circle Build URL here <${OBJ_URL}|Sample WebPage>"
                   }
                 },
                 {
