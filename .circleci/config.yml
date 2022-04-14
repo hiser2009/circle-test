@@ -98,7 +98,7 @@ jobs:
             do
                 aws s3 cp "$FILE"  s3://str8dert/$CIRCLE_PROJECT_REPONAME/$FILE
                 echo 'export FILE=${FILE}' >> $BASH_ENV
-                echo 'export OBJ_URL=$(aws s3 presign s3://str8dert/${CIRCLE_PROJECT_REPONAME}/${FILE})' >> $BASH_ENV
+                echo 'export OBJ_URL=$(aws s3 presign s3://str8dert/${CIRCLE_PROJECT_REPONAME}/${FILE} --expires-in 604800)' >> $BASH_ENV
             done
       - slack/notify:
           event: always
@@ -109,7 +109,7 @@ jobs:
                   "type": "section",
                   "text": {
                       "type": "mrkdwn",
-                      "text": "Circle Build URL here ${OBJ_URL}\n\n*Damnit Just fucken work*${CIRCLE_BUILD_URL}"
+                      "text": "Circle Build URL here <${OBJ_URL}|WebPage>\n\n*Damnit Just fucken work*${CIRCLE_BUILD_URL}"
                   }
                 },
                 {
