@@ -109,7 +109,7 @@ jobs:
                   "type": "section",
                   "text": {
                       "type": "mrkdwn",
-                      "text": "Circle Build URL here <${OBJ_URL}|Sample WebPage>\n\n*Damnit Just fucken work*${CIRCLE_BUILD_URL}"
+                      "text": "Circle Build URL here ${OBJ_URL}\n\n*Damnit Just fucken work*${CIRCLE_BUILD_URL}"
                   }
                 },
                 {
