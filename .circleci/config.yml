@@ -100,7 +100,6 @@ jobs:
                 echo 'export FILE=${FILE}' >> $BASH_ENV
                 echo 'export OBJ_URL=$(aws s3 presign s3://str8dert/$CIRCLE_PROJECT_REPONAME/index.html --expires-in 3600)' >> $BASH_ENV
                 echo $FILE
-                env | grep FILE
             done
       - slack/notify:
           event: pass
