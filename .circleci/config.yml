@@ -101,6 +101,7 @@ jobs:
             done
             echo $FILE
             echo 'export OBJ_URL=$(aws s3 presign s3://str8dert/$CIRCLE_PROJECT_REPONAME/$FILE --expires-in 3600)' >> $BASH_ENV
+            echo 'export OBJ_URL_2=$(aws s3 presign s3://str8dert/$CIRCLE_PROJECT_REPONAME/index.html --expires-in 3600)' >> $BASH_ENV
       - slack/notify:
           event: pass
           custom: |
@@ -110,7 +111,7 @@ jobs:
                   "type": "section",
                   "text": {
                       "type": "mrkdwn",
-                      "text": "Circle Build URL here <${OBJ_URL}|WebPage>\n\n*Damnit Just fucken work*${CIRCLE_BUILD_URL}"
+                      "text": "Circle Build URL here <${OBJ_URL}|WebPage1>\n\n*Circle Build URL here*<${OBJ_URL_2}|Webpage2>\n\n*Damnit Just fucken work*${CIRCLE_BUILD_URL}"
                   }
                 },
                 {
