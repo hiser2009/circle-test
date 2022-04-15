@@ -101,7 +101,7 @@ jobs:
                 echo 'export OBJ_URL=$(aws s3 presign s3://str8dert/${CIRCLE_PROJECT_REPONAME}/${FILE} --expires-in 604800)' >> $BASH_ENV
             done
       - slack/notify:
-          event: always
+          event: pass
           custom: |
             {
               "blocks": [
