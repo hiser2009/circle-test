@@ -94,14 +94,15 @@ jobs:
           name: Save Artifact to S3
           command: |
             cd .. && cd /app
-            for FILE in *.html
+            for FILED in *.html
             do
-                aws s3 cp "$FILE"  s3://str8dert/$CIRCLE_PROJECT_REPONAME/$FILE
-                echo 'export FILE=${FILE}' >> $BASH_ENV
+                aws s3 cp "$FILED"  s3://str8dert/$CIRCLE_PROJECT_REPONAME/$FILED
+                echo 'export FILED=${FILED}' >> $BASH_ENV
             done
             echo $FILE
-            echo 'export OBJ_URL=$(aws s3 presign s3://str8dert/$CIRCLE_PROJECT_REPONAME/$FILE --expires-in 3600)' >> $BASH_ENV
+            echo 'export OBJ_URL=$(aws s3 presign s3://str8dert/$CIRCLE_PROJECT_REPONAME/$FILED --expires-in 3600)' >> $BASH_ENV
             echo 'export OBJ_URL_2=$(aws s3 presign s3://str8dert/$CIRCLE_PROJECT_REPONAME/index.html --expires-in 3600)' >> $BASH_ENV
+            aws s3 presign s3://str8dert/$CIRCLE_PROJECT_REPONAME/$FILED --expires-in 3600
       - slack/notify:
           event: pass
           custom: |
