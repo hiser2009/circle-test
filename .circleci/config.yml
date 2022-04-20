@@ -98,8 +98,9 @@ jobs:
             do
                 aws s3 cp "$FILED"  s3://$URL_BUCKET/$CIRCLE_PROJECT_REPONAME/$FILED
                 echo 'export FILED=${FILED}' >> $BASH_ENV
+                echo 'export OBJ_URL=$(aws s3 presign s3://URL_BUCKET/$CIRCLE_PROJECT_REPONAME/$FILED --expires-in 3600)' >> $BASH_ENV
             done
-            echo 'export OBJ_URL=$(aws s3 presign s3://URL_BUCKET/$CIRCLE_PROJECT_REPONAME/$FILED --expires-in 3600)' >> $BASH_ENV
+            
             echo 'export OBJ_URL_2=$(aws s3 presign s3://URL_BUCKET/$CIRCLE_PROJECT_REPONAME/index.html --expires-in 3600)' >> $BASH_ENV
             echo 'export S3_FILE=$(aws s3 ls s3://str8dert --recursive | tail -n 1)' >> $BASH_ENV
             echo 'export OBJ_URL_3=$(aws s3 presign s3://URL_BUCKET/$CIRCLE_PROJECT_REPONAME/$S3_FILE --expires-in 3600)' >> $BASH_ENV
