@@ -97,11 +97,10 @@ jobs:
             for FILED in *.html
             do
                 aws s3 cp "$FILED"  s3://$URL_BUCKET/$CIRCLE_PROJECT_REPONAME/$FILED
-                echo 'export OBJ_URL=$(aws s3 presign s3://$URL_BUCKET/$CIRCLE_PROJECT_REPONAME/"$FILED" --expires-in 3600)' >> $BASH_ENV
-                #echo 'export FILED=${FILED}' >> $BASH_ENV 
+                echo 'export FILED=${FILED}' >> $BASH_ENV 
                 echo 'export MY_ENV_VAR="FOO"' >> $BASH_ENV 
             done
-            
+            echo 'export OBJ_URL=$(aws s3 presign s3://$URL_BUCKET/$CIRCLE_PROJECT_REPONAME/${FILED} --expires-in 3600)' >> $BASH_ENV
             echo 'export OBJ_URL_2=$(aws s3 presign s3://$URL_BUCKET/$CIRCLE_PROJECT_REPONAME/index.html --expires-in 3600)' >> $BASH_ENV
       - run:
           name: Spit the fruit
