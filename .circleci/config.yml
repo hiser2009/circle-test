@@ -101,9 +101,13 @@ jobs:
                 #echo 'export FILED=${FILED}' >> $BASH_ENV 
                 echo 'export MY_ENV_VAR="FOO"' >> $BASH_ENV 
             done
+            
+            echo 'export OBJ_URL_2=$(aws s3 presign s3://$URL_BUCKET/$CIRCLE_PROJECT_REPONAME/index.html --expires-in 3600)' >> $BASH_ENV
+      - run:
+          name: Spit the fruit
+          command: |
             echo ${OBJ_URL}
             echo ${MY_ENV_VAR}
-            echo 'export OBJ_URL_2=$(aws s3 presign s3://$URL_BUCKET/$CIRCLE_PROJECT_REPONAME/index.html --expires-in 3600)' >> $BASH_ENV
       - slack/notify:
           event: pass
           custom: |
