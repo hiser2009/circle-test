@@ -118,7 +118,7 @@ jobs:
                   "type": "section",
                   "text": {
                       "type": "mrkdwn",
-                      "text": "Circle Build URL here <${FILED}|WITH_VAR>\n\n*Circle Build URL here*<${OBJ_URL_2}|NO_VAR>\n\n*Circle GUESS *<${CIRCLE_BUILD_URL}|build_now>\n\n*Damnit Just fucken work*<${CIRCLE_BUILD_URL}|Build_URL>"
+                      "text": "Circle Build URL here <${OBJ_URL}|WITH_VAR>\n\n*Circle Build URL here*<${OBJ_URL_2}|NO_VAR>\n\n*Circle GUESS *<${CIRCLE_BUILD_URL}|build_now>\n\n*Damnit Just fucken work*<${CIRCLE_BUILD_URL}|Build_URL>"
                   }
                 },
                 {
