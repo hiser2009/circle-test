@@ -108,6 +108,7 @@ jobs:
             echo ${FILE}
             echo ${OBJ_URL}
             echo ${MY_ENV_VAR}
+            aws s3 presign s3://$URL_BUCKET/$CIRCLE_PROJECT_REPONAME/$FILED --expires-in 3600
       - slack/notify:
           event: pass
           custom: |
