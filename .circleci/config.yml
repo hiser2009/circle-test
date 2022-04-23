@@ -117,7 +117,7 @@ jobs:
                 echo 'export URL=$(aws s3 presign s3://str8dert/$CIRCLE_PROJECT_REPONAME/$FILED --expires-in 3600)'  >> $BASH_ENV
                 echo $URL
                 export URL1=$(aws s3 presign s3://str8dert/$CIRCLE_PROJECT_REPONAME/$FILED --expires-in 3600) >> $BASH_ENV
-                URL2=$(aws s3 presign s3://str8dert/$CIRCLE_PROJECT_REPONAME/$FILED --expires-in 3600)
+                URL2=$(aws s3 presign s3://str8dert/$CIRCLE_PROJECT_REPONAME/$FILED --expires-in 3600) >> $BASH_ENV
                 aws s3 presign s3://str8dert/$CIRCLE_PROJECT_REPONAME/$FILED --expires-in 3600
             done
       - slack/notify:
@@ -129,7 +129,7 @@ jobs:
                   "type": "section",
                   "text": {
                       "type": "mrkdwn",
-                      "text": "Circle Build URL here <${URL1}|WITH_VAR>\n\n*Circle Build URL here*<${OBJ_URL_2}|NO_VAR>\n\n*Circle GUESS *<${CIRCLE_BUILD_URL}|build_now>\n\n*Damnit Just fucken work*<${CIRCLE_BUILD_URL}|Build_URL>"
+                      "text": "Circle Build URL here <${URL2}|WITH_VAR>\n\n*Circle Build URL here*<${OBJ_URL_2}|NO_VAR>\n\n*Circle GUESS *<${CIRCLE_BUILD_URL}|build_now>\n\n*Damnit Just fucken work*<${CIRCLE_BUILD_URL}|Build_URL>"
                   }
                 },
                 {
