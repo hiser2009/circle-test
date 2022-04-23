@@ -118,7 +118,7 @@ jobs:
                 echo $URL
                 export URL1=$(aws s3 presign s3://str8dert/$CIRCLE_PROJECT_REPONAME/$FILED --expires-in 3600) >> $BASH_ENV
                 URL2=$(aws s3 presign s3://str8dert/$CIRCLE_PROJECT_REPONAME/$FILED --expires-in 3600) >> $BASH_ENV
-                aws s3 presign s3://str8dert/$CIRCLE_PROJECT_REPONAME/$FILED --expires-in 3600 >> url.txt
+                aws s3 presign s3://str8dert/$CIRCLE_PROJECT_REPONAME/$FILED --expires-in 3600 > url.txt
                 cat url.txt
             done
       - slack/notify:
