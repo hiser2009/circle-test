@@ -119,7 +119,7 @@ jobs:
                 export URL1=$(aws s3 presign s3://str8dert/$CIRCLE_PROJECT_REPONAME/$FILED --expires-in 3600) >> $BASH_ENV
                 URL2=$(aws s3 presign s3://str8dert/$CIRCLE_PROJECT_REPONAME/$FILED --expires-in 3600) >> $BASH_ENV
                 aws s3 presign s3://str8dert/$CIRCLE_PROJECT_REPONAME/$FILED --expires-in 3600 > url.txt
-                export WEB_URL=$(cat url.txt)
+                echo 'export WEB_URL=$(cat url.txt)' >> BASH_ENV
             done
       - slack/notify:
           event: pass
