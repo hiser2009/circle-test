@@ -147,9 +147,27 @@ jobs:
                 }
               ]
             }
+# workflows:
+#   version: 2
+#   build_and_deploy:
+#     jobs:
+#       - build
+
 workflows:
   version: 2
   build_and_deploy:
     jobs:
       - build
+      - slack/on-hold:
+          context: slack-secrets
+          requires:
+            - build
+      - pause_workflow:
+          requires:
+            - build
+            - slack/on-hold
+          type: approval
+      - my_deploy_job:
+          requires:
+            - pause_workflow
       
