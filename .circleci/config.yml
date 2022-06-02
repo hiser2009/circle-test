@@ -6,91 +6,95 @@ jobs:
   build:
     working_directory: /app
     docker:
-      - image: centos:latest
+      - image: $ECR/circle-test:latest
     steps:
       - checkout
       - setup_remote_docker
-      - run:
-          name: Install dependencies
-          command: |
-            cd /etc/yum.repos.d/
-            sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
-            sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
-            cd -
-            yum update -y
-            yum install unzip -y
-            yum search tar
-            yum install tar -y
-            yum update tar
-            yum search gzip
-            yum install gzip -y
-            yum update gzip
-            yum install git -y
-            yum install -y yum-utils
-            dnf install sudo -y 
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            ./aws/install
-            dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
-            dnf repolist -v
-            dnf install docker-ce --nobest -y            
-      - restore_cache:
-          keys:
-            - v1-{{ .Branch }}
-          paths:
-            - /caches/app.tar
       # - run:
-      #     name: Make Dummy Docker Compse File
+      #     name: Install dependencies
       #     command: |
-      #       touch ././docker-compose.yml
-      - run:
-          name: Load Docker image layer cache
-          command: |
-            set +o pipefail
-            docker load -i /caches/app.tar | true
-      - run:
-          name: Build application Docker image
-          command: |
-            docker build --cache-from=app -t app .
-      - run:
-          name: Save Docker image layer cache
-          command: |
-            mkdir -p /caches
-            docker save -o /caches/app.tar app
-      - save_cache:
-          key: v1-{{ .Branch }}-{{ epoch }}
-          paths:
-            - /caches/app.tar
+      #       cd /etc/yum.repos.d/
+      #       sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+      #       sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+      #       cd -
+      #       yum update -y
+      #       yum install unzip -y
+      #       yum search tar
+      #       yum install tar -y
+      #       yum update tar
+      #       yum search gzip
+      #       yum install gzip -y
+      #       yum update gzip
+      #       yum install git -y
+      #       yum install -y yum-utils
+      #       dnf install sudo -y 
+      #       curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+      #       unzip awscliv2.zip
+      #       ./aws/install
+      #       dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+      #       dnf repolist -v
+      #       dnf install docker-ce --nobest -y            
+      # - restore_cache:
+      #     keys:
+      #       - v1-{{ .Branch }}
+      #     paths:
+      #       - /caches/app.tar
+      # # - run:
+      # #     name: Make Dummy Docker Compse File
+      # #     command: |
+      # #       touch ././docker-compose.yml
+      # - run:
+      #     name: Load Docker image layer cache
+      #     command: |
+      #       set +o pipefail
+      #       docker load -i /caches/app.tar | true
+      # - run:
+      #     name: Build application Docker image
+      #     command: |
+      #       docker build --cache-from=app -t app .
+      # - run:
+      #     name: Save Docker image layer cache
+      #     command: |
+      #       mkdir -p /caches
+      #       docker save -o /caches/app.tar app
+      # - save_cache:
+      #     key: v1-{{ .Branch }}-{{ epoch }}
+      #     paths:
+      #       - /caches/app.tar
       # - run:
       #     name: Run tests
       #     command: |
       #       echo docker-compose -f ./docker-compose.test.yml >> ./docker-compose.test.yml
       #       docker-compose -f ./docker-compose.test.yml up
-      - run: echo Running SNYK Scan
-      - snyk/scan:
-          docker-image-name: app --severity-threshold=high     || true
-          fail-on-issues: true
-          install-alpine-dependencies: true
-      - deploy:
-          name: Push application Docker image
+      - run:
+          name: Run tests
           command: |
-            aws configure set AWS_ACCESS_KEY_ID ${ACCESS_KEY_ID}
-            aws configure set AWS_SECRET_ACCESS_KEY ${SECRET_ACCESS_KEY}
-            aws configure set AWS_DEFAULT_REGION ${AWS_DEFAULT_REGION}
-            if [ "${CIRCLE_BRANCH}" == "main" ]; then
-              login="$(aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ECR_ACCOUNT_URL)"
+            cat /etc/os-release
+      # - run: echo Running SNYK Scan
+      # - snyk/scan:
+      #     docker-image-name: app --severity-threshold=high     || true
+      #     fail-on-issues: true
+      #     install-alpine-dependencies: true
+      # - deploy:
+      #     name: Push application Docker image
+      #     command: |
+      #       aws configure set AWS_ACCESS_KEY_ID ${ACCESS_KEY_ID}
+      #       aws configure set AWS_SECRET_ACCESS_KEY ${SECRET_ACCESS_KEY}
+      #       aws configure set AWS_DEFAULT_REGION ${AWS_DEFAULT_REGION}
+      #       if [ "${CIRCLE_BRANCH}" == "main" ]; then
+      #         login="$(aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ECR_ACCOUNT_URL)"
 
-              docker tag app "${AWS_ECR_ACCOUNT_URL}/app:${CIRCLE_SHA1}" 
-              docker push "${AWS_ECR_ACCOUNT_URL}/app:${CIRCLE_SHA1}"
-            fi
-      - slack/notify:
-          channel: 'circle-test-ecr-app'
-          event: pass
-          template: basic_success_1
-      - slack/notify:
-          channel: 'circle-test-ecr-app'
-          event: fail
-          template: basic_fail_1
+      #         docker tag app "${AWS_ECR_ACCOUNT_URL}/app:${CIRCLE_SHA1}" 
+      #         docker push "${AWS_ECR_ACCOUNT_URL}/app:${CIRCLE_SHA1}"
+      #       fi
+      # - slack/notify:
+      #     channel: 'circle-test-ecr-app'
+      #     event: pass
+      #     template: basic_success_1
+      # - slack/notify:
+      #     channel: 'circle-test-ecr-app'
+      #     event: fail
+      #     template: basic_fail_1
           
 workflows:
   version: 2
