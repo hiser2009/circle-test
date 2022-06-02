@@ -7,6 +7,9 @@ jobs:
     working_directory: /app
     docker:
       - image: $ECR/circle-test:latest
+    environment:
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_ROLE_ARN: arn:aws:iam::144291977149:role/circleci-oidc 
     steps:
       - checkout
       - setup_remote_docker
