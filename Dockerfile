@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:jammy-20220428
 
 RUN apt-get -y update && apt-get -y install nginx-full && apt-get install curl -y && apt-get install curl -y
 
